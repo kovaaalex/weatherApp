@@ -7,10 +7,16 @@ function fromCurrentTime(currentWeather){
   weatherContainer.innerHTML += 
   `<div class='hour__weather'>
     <h5>${match}</h5>
-    ${currentWeather.weather.icon}
   </div>`
 }
-function showWeather(){
+function chooseBackgound(day){
+  const body = document.querySelector('body')
+  if (day.pod === 'n') {
+    document.body.style.background = 'linear-gradient(72deg, #00023A 0%, #2F2D67 100%)';
+}
+
+}
+function showPage(){
   fetch(`https://api.weatherbit.io/v2.0/forecast/hourly?city=${city}&key=8527ffdd784d4f81ac1f1a53d8f718cb&hours=48`)
   .then(response => response.json())
   .then(data => {
@@ -20,9 +26,10 @@ function showWeather(){
       temperatures += `Date: ${day.datetime}, Temp: ${day.temp}\n${data.data[0].city_name}`
       fromCurrentTime(day)
     })
+    chooseBackgound(data.data[0])
   })
   .catch(alert(error))
 }
-showWeather()
+showPage()
 
 
